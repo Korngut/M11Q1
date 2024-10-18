@@ -7,74 +7,11 @@ public class Date {
         this._day = _day;
         this._month = _month;
         this._year = _year;
-
-        switch (_month){
-            case 1:
-                if(_day < 1 || _day > 31){
-                    Date FirstJanuary2024 = new Date(1, 1, 2024);
-                }
-
-            case 2:
-                if (_year % 400 == 0 || _year % 4 == 0 && _year % 100 != 0){
-                    if(_day < 1 || _day > 29){
-                        Date FirstJanuary2024 = new Date(1, 1, 2024);
-                    }
-                }
-                else {
-                    if(_day < 1 || _day > 28){
-                        Date FirstJanuary2024 = new Date(1, 1, 2024);
-                    }
-                }
-
-            case 3:
-                if(_day < 1 || _day > 31){
-                    Date FirstJanuary2024 = new Date(1, 1, 2024);
-                }
-
-            case 4:
-                if(_day < 1 || _day > 30){
-                    Date FirstJanuary2024 = new Date(1, 1, 2024);
-                }
-
-            case 5:
-                if(_day < 1 || _day > 31){
-                    Date FirstJanuary2024 = new Date(1, 1, 2024);
-                }
-
-            case 6:
-                if(_day < 1 || _day > 30){
-                    Date FirstJanuary2024 = new Date(1, 1, 2024);
-                }
-
-            case 7:
-                if(_day < 1 || _day > 31){
-                    Date FirstJanuary2024 = new Date(1, 1, 2024);
-                }
-
-            case 8:
-                if(_day < 1 || _day > 31){
-                    Date FirstJanuary2024 = new Date(1, 1, 2024);
-                }
-
-            case 9:
-                if(_day < 1 || _day > 30){
-                    Date FirstJanuary2024 = new Date(1, 1, 2024);
-                }
-
-            case 10:
-                if(_day < 1 || _day > 31){
-                    Date FirstJanuary2024 = new Date(1, 1, 2024);
-                }
-
-            case 11:
-                if(_day < 1 || _day > 30){
-                    Date FirstJanuary2024 = new Date(1, 1, 2024);
-                }
-
-            case 12:
-                if(_day < 1 || _day > 31){
-                    Date FirstJanuary2024 = new Date(1, 1, 2024);
-                }
+        if (checkIfDateIsReal(_day, _month, _year) == "invalidDate"){
+            Date newDate = new Date(1, 1, 2024);
+        }
+        else {
+            Date newDate = new Date(_day, _month, _year);
         }
     }
 
@@ -83,7 +20,7 @@ public class Date {
     }
 
     public Date(Date other){
-
+        Date newDate = new Date(other.get_year(), other.get_month(), other.get_day());
     }
 
     public int get_day() {
@@ -109,4 +46,32 @@ public class Date {
     public void set_year(int yearToSet) {
         this._year = yearToSet;
     }
-}
+
+    private String checkIfDateIsReal(int enterdDay, int enterdMonth, int enterdYear) {
+        switch (enterdMonth) {
+            case 1, 3, 5, 7, 8, 10, 12:
+                if (enterdDay < 1 || enterdDay > 31) {
+                    return "invalidDate";
+                } else return "realDate";
+
+            case 2:
+                if (enterdYear % 400 == 0 || enterdYear % 4 == 0 && enterdYear % 100 != 0) {
+                    if (enterdDay < 1 || enterdDay > 29) {
+                        return "invalidDate";
+                    } else return "realDate";
+                } else {
+                    if (enterdDay < 1 || enterdDay > 28) {
+                        return "invalidDate";
+                    } else return "realDate";
+                }
+
+            case 4, 6, 9, 11:
+                if (enterdDay < 1 || enterdDay > 30) {
+                    return "invalidDate";
+                } else return "realDate";
+
+            default:
+                return "invalidDate";
+        }
+
+}}
