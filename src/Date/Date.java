@@ -1,3 +1,5 @@
+package Date;
+
 public class Date {
     private int _day;
     private int _month;
@@ -108,17 +110,7 @@ public class Date {
 
     }
 
-    // computes the day number since the beginning of the Christian counting of years
-    private int calculateDate(int day, int month, int year) {
-        if (month < 3) {
-            year--;
-            month = month + 12;
-        }
-        return 365 * year + year / 4 - year / 100 + year / 400 + ((month + 1) * 306) / 10 + (day - 62);
-    }
-
     //Compares an entered date to the date in the object
-
     public boolean equals(Date other) {
         if (
                 other.getDay() == this._day &&
@@ -140,11 +132,11 @@ public class Date {
     }
 
     public boolean after(Date other) {
-        return this.before(other);
+        return (this.before(other));
     }
 
     public int difference (Date other) {
-        return calculateDate(other.getDay(), other.getMonth(), other.getYear()) - calculateDate(_day, _month, other.getYear());
+        return Math.abs(calculateDate(other._day, other._month, other._year) - calculateDate(_day, _month, _year));
     }
 
     public String toString() {
@@ -200,4 +192,14 @@ public class Date {
         return (y%4==0 && y%100!=0) || (y%400==0) ? true : false;
     }
 
+    // computes the day number since the beginning of the Christian counting of years
+    private int calculateDate ( int day, int month, int year)
+    {
+        if (month < 3) {
+            year--;
+            month = month + 12;
+        }
+        return 365 * year + year/4 - year/100 + year/400 + ((month+1) * 306)/10 + (day - 62);
+
+    }
 }
