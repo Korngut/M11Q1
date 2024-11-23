@@ -1,5 +1,3 @@
-package Date;
-
 public class Date {
     private int _day;
     private int _month;
@@ -124,16 +122,22 @@ public class Date {
     }
 
     public boolean before(Date other) {
-        if (calculateDate(other._day, other._month, other._year) < calculateDate(this._day, this._month, this._year)) {
+        if (this._year < other._year) {
             return true;
-        } else {
-            return false;
+        } else if (this._year == other._year) {
+            if (this._month < other._month) {
+                return true;
+            } else if (this._month == other._month) {
+                return this._day < other._day;
+            }
         }
+        return false;
     }
 
     public boolean after(Date other) {
-        return (this.before(other));
+        return !other.before(this);
     }
+
 
     public int difference (Date other) {
         return Math.abs(calculateDate(other._day, other._month, other._year) - calculateDate(_day, _month, _year));

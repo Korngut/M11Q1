@@ -1,20 +1,21 @@
-package Weight;
-
 public class Weight {
     private int _kilos;
     private int _grams;
 
     private static final int minimumWeight = 1;
+    private static final int maximumGrams = 999;
     private static final int amountOfGramsInKilo = 1000;
 
     public Weight(int kilos, int grams) {
-        if (grams >= 0) {  // Just ensure grams is non-negative
-            this._kilos = kilos + grams / amountOfGramsInKilo;  // Convert excess grams into kilos
-            this._grams = grams % amountOfGramsInKilo;  // Remainder grams after converting excess to kilos
-        } else {
-            // Handle invalid grams by setting them to zero or other appropriate value
-            this._kilos = 0;
-            this._grams = 0;
+        if (kilos > minimumWeight && grams > minimumWeight && grams < maximumGrams) {
+            this._kilos = kilos;
+            this._grams = grams;
+        }
+        if (grams > maximumGrams || grams < minimumWeight){
+            this._grams = minimumWeight;
+        }
+        if (kilos < minimumWeight){
+            this._kilos = minimumWeight;
         }
     }
 

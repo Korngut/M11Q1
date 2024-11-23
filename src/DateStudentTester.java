@@ -1,5 +1,3 @@
-package Date;
-
 public class DateStudentTester
 {
     public static void main(String[] args) {
@@ -28,12 +26,12 @@ public class DateStudentTester
         else 
              System.out.println("\td3 isn't the same date as d4");
         System.out.println("\n4. Testing before method:");
-        if(d3.before(d1))
+        if(d2.before(d3))
              System.out.println("\td3 is before d1");        
         else 
              System.out.println("\td3 isn't before d1");     
         System.out.println("\n5. Testing after method:");
-        if(d3.after(d1))
+        if(d3.after(d2))
              System.out.println("\td3 is after d1");
         else 
              System.out.println("\td3 isn't after d1");      
