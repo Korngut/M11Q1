@@ -7,6 +7,8 @@ public class Baby {
     private Weight _currentWeight;
 
     private static final int MIN_WEIGHT_IN_GRAMS = 1000;
+    private static final int MIN_DAY_IN_YEAR = 1;
+    private static final int MAX_DAY_IN_YEAR = 1;
 
     public Baby (String fName, String lName, String id, int day, int month, int year, int birthWeightInGrams){
         this._firstName = fName;
@@ -55,7 +57,7 @@ public class Baby {
         return _currentWeight;
     }
 
-    public String toString(){
+    public String toString() {
         return (
                 ("Name:" + this._firstName + " " + this._lastName + "\n") +
                 ("Id:" + this._id + "\n") +
@@ -79,5 +81,24 @@ public class Baby {
                 (other._dateOfBirth == this._dateOfBirth);
     }
 
+    public void updateCurrentWeight (int grams) {
+        this._currentWeight.add(grams);
+    }
+
+    public boolean older (Baby other){
+        return (this._dateOfBirth.before(other._dateOfBirth));
+    }
+
+    public int isWeightInValidRange (int numOfDays) {
+        if (numOfDays < MIN_DAY_IN_YEAR || numOfDays > MAX_DAY_IN_YEAR) {
+            return 1;
+        }
+        else if (numOfDays <= 7) {
+                if (    ) {
+
+            }
+        }
+
+    }
 
 }
