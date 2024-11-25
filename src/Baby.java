@@ -8,7 +8,7 @@ public class Baby {
 
     private static final int MIN_WEIGHT_IN_GRAMS = 1000;
     private static final int MIN_DAY_IN_YEAR = 1;
-    private static final int MAX_DAY_IN_YEAR = 1;
+    private static final int MAX_DAY_IN_YEAR = 365;
 
     public Baby (String fName, String lName, String id, int day, int month, int year, int birthWeightInGrams){
         this._firstName = fName;
@@ -90,15 +90,64 @@ public class Baby {
     }
 
     public int isWeightInValidRange (int numOfDays) {
-        if (numOfDays < MIN_DAY_IN_YEAR || numOfDays > MAX_DAY_IN_YEAR) {
-            return 1;
-        }
-        else if (numOfDays <= 7) {
-                if (    ) {
-
+        if (numOfDays >= 1 && numOfDays <= 7){
+            double dailyGain = turnWeightToGrams(this._birthWeight) * (0.1 / 7);
+            if ((turnWeightToGrams(this._birthWeight))*(0.1/numOfDays) == turnWeightToGrams(this._currentWeight)) {
+                return 3;
+            }
+            else {
+                return 2;
             }
         }
 
+        else if (numOfDays >= 8 && numOfDays <= 60) {
+            if ((numOfDays - 7) * (30) + turnWeightToGrams(this._birthWeight) * (0.1 / 7)
+            == turnWeightToGrams(this._currentWeight)) {
+                return 3;
+            }
+            else {
+                return 2;
+            }
+        }
+
+        else if (numOfDays >= 61 && numOfDays <= 120){
+            if ((numOfDays - 60) * (25) + 52 * (30) + turnWeightToGrams(this._birthWeight) * (0.1 / 7)
+                    == turnWeightToGrams(this._currentWeight)) {
+                return 3;
+            }
+            else {
+                return 2;
+            }
+        }
+
+        else if (numOfDays >= 121 && numOfDays <= 240){
+            if ((numOfDays - 121) + 59 * (25) + 52 * (30) + turnWeightToGrams(this._birthWeight) * (0.1 / 7)
+                    == turnWeightToGrams(this._currentWeight)) {
+                return 3;
+            }
+            else {
+                return 2;
+            }
+        }
+
+        else if (numOfDays >= 241 && numOfDays <= 365){
+            if ((numOfDays - 241) * (8) + 119 * (16) + 59 * (25) + 52 * (30) + turnWeightToGrams(this._birthWeight) * (0.1 / 7)
+                    == turnWeightToGrams(this._currentWeight)) {
+                return 3;
+            }
+            else {
+                return 2;
+            }
+        }
+        else {
+            return 1;
+        }
+
+
+    }
+
+    private int turnWeightToGrams(Weight weight) {
+        return weight.getGrams() + (weight.getKilos() * 1000);
     }
 
 }
