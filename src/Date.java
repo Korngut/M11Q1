@@ -146,7 +146,19 @@ public class Date {
 
     //TODO Add 0 when needed in the print
     public String toString() {
-        return (_day + "/" + _month + "/" + _year);
+        if (_day < 10 && _month < 10) {
+        return ("0" + _day + "/" + "0" +  _month + "/" + _year);
+        }
+        else if (_day < 10) {
+            return ("0" + _day + "/" +  _month + "/" + _year);
+        }
+        else if (_month < 10) {
+            return ("0" + _day + "/" + _month + "/" + _year);
+        }
+        else {
+            return (_day + "/" + _month + "/" + _year);
+        }
+
     }
 
     public Date tomorrow() {
