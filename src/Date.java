@@ -124,7 +124,8 @@ public class Date {
     public boolean before(Date other) {
         if (this._year < other._year) {
             return true;
-        } else if (this._year == other._year) {
+        }
+        if (this._year == other._year) {
             if (this._month < other._month) {
                 return true;
             } else if (this._month == other._month) {
@@ -135,7 +136,7 @@ public class Date {
     }
 
     public boolean after(Date other) {
-        return !other.before(this);
+        return !(this.before(other));
     }
 
 
@@ -143,6 +144,7 @@ public class Date {
         return Math.abs(calculateDate(other._day, other._month, other._year) - calculateDate(_day, _month, _year));
     }
 
+    //TODO Add 0 when needed in the print
     public String toString() {
         return (_day + "/" + _month + "/" + _year);
     }

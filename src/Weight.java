@@ -2,20 +2,21 @@ public class Weight {
     private int _kilos;
     private int _grams;
 
-    private static final int minimumWeight = 1;
-    private static final int maximumGrams = 999;
-    private static final int amountOfGramsInKilo = 1000;
+    private static final int MINIMUM_WEIGHT_GRAMS = 0;
+    private static final int MINIMUM_WEIGHT_KILOS = 1;
+    private static final int MAXIMUM_GRAMS = 999;
+    private static final int AMOUNT_OF_GRAMS_IN_KILO = 1000;
 
     public Weight(int kilos, int grams) {
-        if (kilos > minimumWeight && grams > minimumWeight && grams < maximumGrams) {
+        if (kilos >= MINIMUM_WEIGHT_KILOS && grams >= MINIMUM_WEIGHT_GRAMS && grams <= MAXIMUM_GRAMS) {
             this._kilos = kilos;
             this._grams = grams;
         }
-        if (grams > maximumGrams || grams < minimumWeight){
-            this._grams = minimumWeight;
+        if (grams > MAXIMUM_GRAMS || grams < MINIMUM_WEIGHT_GRAMS){
+            this._grams = MINIMUM_WEIGHT_GRAMS;
         }
-        if (kilos < minimumWeight){
-            this._kilos = minimumWeight;
+        if (kilos < MINIMUM_WEIGHT_KILOS){
+            this._kilos = MINIMUM_WEIGHT_KILOS;
         }
     }
 
@@ -25,8 +26,8 @@ public class Weight {
     }
 
     public Weight(int totalGrams) {
-        this._kilos = totalGrams / amountOfGramsInKilo;
-        this._grams = totalGrams % amountOfGramsInKilo;
+        this._kilos = totalGrams / AMOUNT_OF_GRAMS_IN_KILO;
+        this._grams = totalGrams % AMOUNT_OF_GRAMS_IN_KILO;
     }
 
     public int getKilos() {
@@ -50,26 +51,30 @@ public class Weight {
     }
 
     public boolean lighter(Weight other) {
-        return turnWeightToGrams(other) > turnWeightToGrams(this);
+        return turnWeightToGrams(other) > turnWeightToGrams(this); // `other` is heavier
     }
 
     public boolean heavier(Weight other) {
-        return turnWeightToGrams(other) > turnWeightToGrams(this);
+        return turnWeightToGrams(this) > turnWeightToGrams(other); // `this` is heavier
     }
 
     public String toString() {
-        return _kilos + "." + (_grams < 10 ? "0" + _grams : _grams);
+        double numOfGramsIn = turnWeightToGrams(this);
+        numOfGramsIn = numOfGramsIn/1000;
+        return "" + numOfGramsIn;
     }
 
+
+
     public Weight add(int other) {
-        if ((turnWeightToGrams(this) + other) / amountOfGramsInKilo < minimumWeight) {
+        if ((turnWeightToGrams(this) + other) / AMOUNT_OF_GRAMS_IN_KILO < MINIMUM_WEIGHT_KILOS) {
             return this;
         } else {
-            return new Weight((turnWeightToGrams(this) + other) / amountOfGramsInKilo, (turnWeightToGrams(this) + other) % amountOfGramsInKilo);
+            return new Weight((turnWeightToGrams(this) + other) / AMOUNT_OF_GRAMS_IN_KILO, (turnWeightToGrams(this) + other) % AMOUNT_OF_GRAMS_IN_KILO);
         }
     }
 
     private int turnWeightToGrams(Weight weight) {
-        return this._grams + (this._kilos * amountOfGramsInKilo);
+        return weight._grams + (weight._kilos * AMOUNT_OF_GRAMS_IN_KILO);
     }
 }
