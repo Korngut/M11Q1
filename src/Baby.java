@@ -17,6 +17,7 @@ public class Baby {
         this._id = id;
         this._dateOfBirth = new Date(day, month, year);
         this._birthWeight = new Weight(birthWeightInGrams);
+        this._currentWeight = new Weight(birthWeightInGrams);
     }
 
     public Baby (Baby other){
@@ -29,7 +30,7 @@ public class Baby {
     }
 
     public void setCurrentWeight(Weight _currentWeight) {
-        if (_currentWeight.getGrams() > MIN_WEIGHT_IN_GRAMS) {
+        if (turnWeightToGrams(_currentWeight) > MIN_WEIGHT_IN_GRAMS) {
             this._currentWeight = _currentWeight;
         }
     }
@@ -64,7 +65,7 @@ public class Baby {
                 ("Id:" + this._id + "\n") +
                 ("Date of Birth:" + this._dateOfBirth.toString() + "\n") +
                 ("Birth Weight:" + this._birthWeight.toString() + "\n") +
-                ("Birth Weight:" + this._currentWeight.toString() + "\n")
+                ("Current Weight:" + this._currentWeight.toString() + "\n")
         );
     }
 
@@ -90,62 +91,67 @@ public class Baby {
         return (this._dateOfBirth.before(other._dateOfBirth));
     }
 
-    public int isWeightInValidRange (int numOfDays) {
-        if (numOfDays >= 1 && numOfDays <= 7){
-            double dailyGain = turnWeightToGrams(this._birthWeight) * (0.1 / 7);
-            if ((turnWeightToGrams(this._birthWeight))*(0.1/numOfDays) == turnWeightToGrams(this._currentWeight)) {
+    public boolean heavier (Baby other){
+        if (turnWeightToGrams(this._currentWeight) > turnWeightToGrams(other._currentWeight)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public int isWeightInValidRange(int numOfDays) {
+        if (numOfDays >= 1 && numOfDays <= 7) {
+            double expectedWeight = turnWeightToGrams(this._birthWeight) * (1 - (0.1 * numOfDays / 7));
+            if (Math.abs(expectedWeight - turnWeightToGrams(this._currentWeight)) < 0.01) { // Allowing minor rounding errors
                 return 3;
-            }
-            else {
+            } else {
                 return 2;
             }
         }
 
         else if (numOfDays >= 8 && numOfDays <= 60) {
-            if ((numOfDays - 7) * (30) + turnWeightToGrams(this._birthWeight) * (0.1 / 7)
-            == turnWeightToGrams(this._currentWeight)) {
+            if ((numOfDays - 7) * (30) + turnWeightToGrams(this._birthWeight) * (1 - 0.1)
+                    == turnWeightToGrams(this._currentWeight)) {
                 return 3;
-            }
-            else {
+            } else {
                 return 2;
             }
         }
 
-        else if (numOfDays >= 61 && numOfDays <= 120){
-            if ((numOfDays - 60) * (25) + 52 * (30) + turnWeightToGrams(this._birthWeight) * (0.1 / 7)
+        else if (numOfDays >= 61 && numOfDays <= 120) {
+            if ((numOfDays - 60) * (25) + 52 * (30) + turnWeightToGrams(this._birthWeight) * (1 - 0.1)
                     == turnWeightToGrams(this._currentWeight)) {
                 return 3;
-            }
-            else {
+            } else {
                 return 2;
             }
         }
 
-        else if (numOfDays >= 121 && numOfDays <= 240){
-            if ((numOfDays - 121) + 59 * (25) + 52 * (30) + turnWeightToGrams(this._birthWeight) * (0.1 / 7)
+        else if (numOfDays >= 121 && numOfDays <= 240) {
+            if ((numOfDays - 121) + 59 * (25) + 52 * (30) + turnWeightToGrams(this._birthWeight) * (1 - 0.1)
                     == turnWeightToGrams(this._currentWeight)) {
                 return 3;
-            }
-            else {
+            } else {
                 return 2;
             }
         }
 
-        else if (numOfDays >= 241 && numOfDays <= 365){
-            if ((numOfDays - 241) * (8) + 119 * (16) + 59 * (25) + 52 * (30) + turnWeightToGrams(this._birthWeight) * (0.1 / 7)
+        else if (numOfDays >= 241 && numOfDays <= 365) {
+            if ((numOfDays - 241) * (8) + 119 * (16) + 59 * (25) + 52 * (30)
+                    + turnWeightToGrams(this._birthWeight) * (1 - 0.1)
                     == turnWeightToGrams(this._currentWeight)) {
                 return 3;
-            }
-            else {
+            } else {
                 return 2;
             }
         }
+
         else {
             return 1;
         }
-
-
     }
+
 
     private int turnWeightToGrams(Weight weight) {
         return weight.getGrams() + (weight.getKilos() * 1000);

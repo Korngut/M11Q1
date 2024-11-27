@@ -3,6 +3,8 @@ public class Date {
     private int _month;
     private int _year;
 
+    //TODO: Test valid in setters
+
     private static final int minimumDaysPerMonth = 1;
     private static final int lowestYear = 0;
 
@@ -144,7 +146,6 @@ public class Date {
         return Math.abs(calculateDate(other._day, other._month, other._year) - calculateDate(_day, _month, _year));
     }
 
-    //TODO Add 0 when needed in the print
     public String toString() {
         if (_day < 10 && _month < 10) {
         return ("0" + _day + "/" + "0" +  _month + "/" + _year);
