@@ -42,6 +42,7 @@ public class DateStudentTester
         System.out.println("\t" + d6+" tomorrow is : "+d6.tomorrow());
         Date d7=new Date(31,12,2019);
         System.out.println("\t" + d7+" tomorrow is : "+d7.tomorrow());
+        System.out.println(new Date(1, 1, 2025).difference(new Date(1, 1, 2024)));;
         System.out.println("\n********** Test Date - Finished **********\n");
     
     }

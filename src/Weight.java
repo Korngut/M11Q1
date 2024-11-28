@@ -34,16 +34,20 @@ public class Weight {
         return _kilos;
     }
 
-    public void setKilos(int _kilos) {
-        this._kilos = _kilos;
+    public void setKilos(int kilos) {
+        if (kilos > MINIMUM_WEIGHT_KILOS){
+            this._kilos = kilos;
+        }
     }
 
     public int getGrams() {
         return _grams;
     }
 
-    public void setGrams(int _grams) {
-        this._grams = _grams;
+    public void setGrams(int grams) {
+        if (grams > MINIMUM_WEIGHT_KILOS && grams < MAXIMUM_GRAMS){
+            this._grams = grams;
+        }
     }
 
     public boolean equals(Weight other) {

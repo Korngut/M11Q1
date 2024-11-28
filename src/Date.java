@@ -49,7 +49,6 @@ public class Date {
         if (checkIfDateIsReal(dayToSet, this._month, this._year).equals("realDate")) {
             this._day = dayToSet;
         }
-        ;
     }
 
     //Getter for month:
@@ -59,7 +58,7 @@ public class Date {
 
     //Setter for month, with validation
     public void setMonth(int monthToSet) {
-        if (monthToSet > 1 && monthToSet <= 12) {
+        if (checkIfDateIsReal(this._day, monthToSet, this._year).equals("realDate")){
             this._month = monthToSet;
         }
     }
@@ -71,7 +70,7 @@ public class Date {
 
     //Setter for year, with validation
     public void setYear(int yearToSet) {
-        if (yearToSet >= 0) {
+        if (checkIfDateIsReal(this._day, this._month, yearToSet).equals("realDate")){
             this._year = yearToSet;
         }
     }
@@ -142,9 +141,13 @@ public class Date {
     }
 
 
-    public int difference (Date other) {
-        return Math.abs(calculateDate(other._day, other._month, other._year) - calculateDate(_day, _month, _year));
+    public int difference(Date other) {
+        int thisDays = this.calculateDate(this._day, this._month, this._year);
+        int otherDays = other.calculateDate(other._day, other._month, other._year);
+
+        return Math.abs(thisDays - otherDays);
     }
+
 
     public String toString() {
         if (_day < 10 && _month < 10) {

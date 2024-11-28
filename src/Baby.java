@@ -10,11 +10,17 @@ public class Baby {
     private static final int MIN_DAY_IN_YEAR = 1;
     private static final int MAX_DAY_IN_YEAR = 365;
 
-    //TODO: ID check
     public Baby (String fName, String lName, String id, int day, int month, int year, int birthWeightInGrams){
         this._firstName = fName;
         this._lastName = lName;
-        this._id = id;
+
+        if (id.length()== 9){
+            this._id = id;
+        }
+        else {
+            this._id = "000000000";
+        }
+
         this._dateOfBirth = new Date(day, month, year);
         this._birthWeight = new Weight(birthWeightInGrams);
         this._currentWeight = new Weight(birthWeightInGrams);
@@ -101,54 +107,46 @@ public class Baby {
     }
 
     public int isWeightInValidRange(int numOfDays) {
-        if (numOfDays >= 1 && numOfDays <= 7) {
-            double expectedWeight = turnWeightToGrams(this._birthWeight) * (1 - (0.1 * numOfDays / 7));
-            if (Math.abs(expectedWeight - turnWeightToGrams(this._currentWeight)) < 0.01) { // Allowing minor rounding errors
-                return 3;
-            } else {
-                return 2;
-            }
+        if (numOfDays < 1 || numOfDays > 365) {
+            return 1;
         }
 
-        else if (numOfDays >= 8 && numOfDays <= 60) {
-            if ((numOfDays - 7) * (30) + turnWeightToGrams(this._birthWeight) * (1 - 0.1)
-                    == turnWeightToGrams(this._currentWeight)) {
-                return 3;
-            } else {
-                return 2;
-            }
-        }
+        int birthWeightInGrams = turnWeightToGrams(this._birthWeight);
+        int currentWeightInGrams = turnWeightToGrams(this._currentWeight);
 
-        else if (numOfDays >= 61 && numOfDays <= 120) {
-            if ((numOfDays - 60) * (25) + 52 * (30) + turnWeightToGrams(this._birthWeight) * (1 - 0.1)
-                    == turnWeightToGrams(this._currentWeight)) {
-                return 3;
-            } else {
-                return 2;
-            }
-        }
+        double expectedWeightInGrams = birthWeightInGrams;
 
-        else if (numOfDays >= 121 && numOfDays <= 240) {
-            if ((numOfDays - 121) + 59 * (25) + 52 * (30) + turnWeightToGrams(this._birthWeight) * (1 - 0.1)
-                    == turnWeightToGrams(this._currentWeight)) {
-                return 3;
-            } else {
-                return 2;
-            }
-        }
+        if (numOfDays <= 7) {
+            double weightLoss = birthWeightInGrams * 0.10 * (numOfDays / 7.0);
+            expectedWeightInGrams -= weightLoss; }
 
-        else if (numOfDays >= 241 && numOfDays <= 365) {
-            if ((numOfDays - 241) * (8) + 119 * (16) + 59 * (25) + 52 * (30)
-                    + turnWeightToGrams(this._birthWeight) * (1 - 0.1)
-                    == turnWeightToGrams(this._currentWeight)) {
-                return 3;
-            } else {
-                return 2;
-            }
-        }
+        else if (numOfDays <= 60) {
+            expectedWeightInGrams -= birthWeightInGrams * 0.10;
+            expectedWeightInGrams += 30 * (numOfDays - 7); }
+
+        else if (numOfDays <= 120) {
+            expectedWeightInGrams -= birthWeightInGrams * 0.10;
+            expectedWeightInGrams += 30 * 53;
+            expectedWeightInGrams += 25 * (numOfDays - 60); }
+
+        else if (numOfDays <= 240) {
+            expectedWeightInGrams -= birthWeightInGrams * 0.10;
+            expectedWeightInGrams += 30 * 53;
+            expectedWeightInGrams += 25 * 60;
+            expectedWeightInGrams += 16 * (numOfDays - 120); }
 
         else {
-            return 1;
+            expectedWeightInGrams -= birthWeightInGrams * 0.10;
+            expectedWeightInGrams += 30 * 53;
+            expectedWeightInGrams += 25 * 60;
+            expectedWeightInGrams += 16 * 120;
+            expectedWeightInGrams += 8 * (numOfDays - 240);
+        }
+
+        if (currentWeightInGrams < expectedWeightInGrams) {
+            return 2;
+        } else {
+            return 3;
         }
     }
 
