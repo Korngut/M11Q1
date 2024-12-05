@@ -50,15 +50,20 @@ public class Baby {
 
     @param other - the baby to be copied.
      */
-    public Baby (Baby other){
-        this._firstName = other._firstName;
-        this._lastName = other._lastName;
-        this._id = other._id;
-        this._dateOfBirth = other._dateOfBirth;
-        this._birthWeight = other._birthWeight;
-        this._currentWeight = other._currentWeight;
+    public Baby(Baby other) {
+        this._firstName = other.getFirstName();
+        this._lastName = other.getLastName();
+        this._id = other.getId();
+        this._dateOfBirth = other.getDateOfBirth();
+        this._birthWeight = other.getBirthWeight();
+        this._currentWeight = other.getCurrentWeight();
     }
 
+    /*
+    Sets the current weight if the given parameter is valid.
+
+    @param weightToSet - the new current weight.
+     */
     public void setCurrentWeight(Weight _currentWeight) {
         if (turnWeightToGrams(_currentWeight) > MIN_WEIGHT_IN_GRAMS) {
             this._currentWeight = _currentWeight;
@@ -74,29 +79,56 @@ public class Baby {
         return _firstName;
     }
 
+    /*
+    Gets the last name.
+
+    @return the last name of this baby.
+     */
     public String getLastName() {
         return _lastName;
     }
 
+    /*
+    Gets the date of birth.
+
+    @return the date of birth of this baby.
+     */
     public Date getDateOfBirth() {
         return _dateOfBirth;
     }
 
+    /*
+    Gets the id.
+
+    @return the id of this baby.
+     */
     public String getId() {
         return _id;
     }
 
     /*
     Gets the birth weight.
+
+    @return the weight of this baby at birth.
      */
     public Weight getBirthWeight() {
         return _birthWeight;
     }
 
+    /*
+    Gets the current weight.
+
+    @return the current weight of this baby.
+     */
     public Weight getCurrentWeight() {
         return _currentWeight;
     }
 
+    /*
+    Returns a String that represents this baby.
+
+    @return a String that represents this baby.
+     */
     public String toString() {
         return (
                 ("Name:" + this._firstName + " " + this._lastName + "\n") +
@@ -109,6 +141,9 @@ public class Baby {
 
     /*
     Checks if two babies are twins.
+
+    @param other - the baby to compare this baby with.
+    @return true if the babies are twins.
      */
     public boolean areTwins (Baby other) {
         return other._lastName.equals(this._lastName) &&
@@ -118,7 +153,10 @@ public class Baby {
     }
 
     /*
-    Checks if two babies are the same.
+    Checks if two babies are the same. Two babies are consider the same if they have the same first and last name, same ID and similar date of birth.
+
+    @param other - the baby to compare this baby with.
+    @return true if the babies are the same.
      */
     public boolean equals (Baby other) {
         return other._lastName.equals(this._lastName) &&
@@ -127,14 +165,31 @@ public class Baby {
                 (other._dateOfBirth == this._dateOfBirth);
     }
 
+    /*
+    Updates the baby's current weight by adding the additional grams. If the sum of the current weight and the additional grams is negative, the baby's current weight will remain unchanged.
+
+    @param grams - the number of grams to add to he baby's current weight (can be negative).
+     */
     public void updateCurrentWeight (int grams) {
         this._currentWeight.add(grams);
     }
 
+    /*
+    Checks if the date of birth of this baby is before than the date of birth of another baby.
+
+    @param other - baby to compare this baby's date of birth to.
+    @return true if the date of birth of this baby is before the date of birth of the other baby.
+     */
     public boolean older (Baby other){
         return (this._dateOfBirth.before(other._dateOfBirth));
     }
 
+    /*
+    Checks if the date of birth of this baby is before than the date of birth of another baby.
+
+    @param other - baby to compare this baby's date of birth to.
+    @return true if the date of birth of this baby is before the date of birth of the other baby.
+     */
     public boolean heavier (Baby other){
         if (turnWeightToGrams(this._currentWeight) > turnWeightToGrams(other._currentWeight)) {
             return true;
@@ -144,6 +199,12 @@ public class Baby {
         }
     }
 
+    /*
+    Checks if the current weight of this baby is within the valid range.
+
+    @param number - of days passed since the baby was born.
+    @return 1- If the date given as a parameter is less than a week or more than a year. 2- If the progress is not correct according to the rules. 3- If the progress is correct according to the rules.
+     */
     public int isWeightInValidRange(int numOfDays) {
         if (numOfDays < 1 || numOfDays > 365) {
             return 1;
