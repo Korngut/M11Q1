@@ -44,12 +44,12 @@ public class Date {
     @param year the year (4 digits)
      */
     public Date(int day, int month, int year) {
-        if (checkIfDateIsReal(day, month, year).equals("invalidDate")) {
+        if (checkIfDateIsReal(day, month, year).equals("invalidDate")) { //Checks if the date is correct.
             this._day = DEFAULT_DAY_IN_MONTH;
             this._month = DEFAULT_MONTH_IN_YEAR;
             this._year = DEFAULT_YEAR;
 
-        } else {
+        } else { //Initializes to entered values
             this._day = day;
             this._month = month;
             this._year = year;
@@ -92,7 +92,7 @@ public class Date {
     @param dayToSet the new day value
      */
     public void setDay(int dayToSet) {
-        if (checkIfDateIsReal(dayToSet, this._month, this._year).equals("realDate")) {
+        if (checkIfDateIsReal(dayToSet, this._month, this._year).equals("realDate")) { //Checks if the date is correct.
             this._day = dayToSet;
         }
     }
@@ -112,7 +112,7 @@ public class Date {
     @param monthToSet the new month value
      */
     public void setMonth(int monthToSet) {
-        if (checkIfDateIsReal(this._day, monthToSet, this._year).equals("realDate")){
+        if (checkIfDateIsReal(this._day, monthToSet, this._year).equals("realDate")){ //Checks if the date is correct.
             this._month = monthToSet;
         }
     }
@@ -132,12 +132,12 @@ public class Date {
     @param yearToSet the new year value
      */
     public void setYear(int yearToSet) {
-        if (checkIfDateIsReal(this._day, this._month, yearToSet).equals("realDate")){
+        if (checkIfDateIsReal(this._day, this._month, yearToSet).equals("realDate")){ //Checks if the date is correct.
             this._year = yearToSet;
         }
     }
 
-
+    //The function checks for each month whether the number of days in it is correct, and thus returns whether the date is a real date.
     private String checkIfDateIsReal(int enteredDay, int enteredMonth, int enteredYear) {
         switch (enteredMonth) {
             case JANUARY, MARCH, MAY, JULY, AUGUST, OCTOBER, DECEMBER:
@@ -173,7 +173,7 @@ public class Date {
     @param other the date to compare this date to
     @return true if the dates are the same
      */
-    public boolean equals(Date other) {
+    public boolean equals(Date other) { //Compares each of the equals parameters.
         return other.getDay() == this._day &&
                 other.getMonth() == this._month &&
                 other.getYear() == this._year;
@@ -185,7 +185,7 @@ public class Date {
     @param other date to compare this date to
     @return true if this date is before the other date
      */
-    public boolean before(Date other) {
+    public boolean before(Date other) { //Checks whether each of the parameters is greater than the other, depending on their size (year, month, and day)
         if (this._year < other._year) {
             return true;
         }
@@ -219,7 +219,7 @@ public class Date {
         int thisDays = this.calculateDate(this._day, this._month, this._year);
         int otherDays = other.calculateDate(other._day, other._month, other._year);
 
-        return Math.abs(thisDays - otherDays);
+        return Math.abs(thisDays - otherDays); //Subtracts the difference between two dates, in absolute value.
     }
 
     /**
@@ -228,7 +228,7 @@ public class Date {
     @return a String that represents this date in the following format: day (2 digits) / month(2 digits) / year (4 digits) for example: 02/03/1998
      */
     public String toString() {
-        if (_day < 10 && _month < 10) {
+        if (_day < 10 && _month < 10) { //Adds zeros before the number assuming it is necessary.
         return ("0" + _day + "/" + "0" +  _month + "/" + _year);
         }
         else if (_day < 10) {
@@ -248,7 +248,7 @@ public class Date {
 
     @return the date of tomorrow
      */
-    public Date tomorrow() {
+    public Date tomorrow() { //Compares each of the values and adds one to it, depending on the number of days in each month. It knows whether to add a day, month, etc.
         if (_month == APRIL || _month == JUNE || _month == SEPTEMBER || _month == NOVEMBER) {
             if (_day < MONTH_LENGTH_30) {
                 return new Date(_day + 1, _month, _year);

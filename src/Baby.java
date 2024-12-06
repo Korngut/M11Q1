@@ -14,8 +14,8 @@ public class Baby {
     private Weight _currentWeight;
 
     private static final int MIN_WEIGHT_IN_GRAMS = 1000;
-    private static final int MIN_DAY_IN_YEAR = 1;
-    private static final int MAX_DAY_IN_YEAR = 365;
+    private static final int AMOUNT_OF_GRAMS_IN_KILO = 1000;
+
 
     private static final int ID_LENGTH = 9;
     private static final String DEFAULT_ID = "000000000";
@@ -41,7 +41,7 @@ public class Baby {
             this._id = id;
         }
         else {
-            this._id = DEFAULT_ID;
+            this._id = DEFAULT_ID; //Changes the id to a default value in case of invalid input.
         }
 
         this._dateOfBirth = new Date(day, month, year);
@@ -69,7 +69,7 @@ public class Baby {
     @param weightToSet the new current weight.
      */
     public void setCurrentWeight(Weight weightToSet) {
-        if (turnWeightToGrams(weightToSet) > MIN_WEIGHT_IN_GRAMS) {
+        if (turnWeightToGrams(weightToSet) > MIN_WEIGHT_IN_GRAMS) { //Checks if the weight value is correct.
             this._currentWeight = weightToSet;
         }
     }
@@ -153,7 +153,7 @@ public class Baby {
         return other._lastName.equals(this._lastName) &&
                 !other._firstName.equals(this._firstName) &&
                 !other._id.equals(this._id) &&
-                (other._dateOfBirth == this._dateOfBirth || other._dateOfBirth == this._dateOfBirth.tomorrow() || other._dateOfBirth.tomorrow() == this._dateOfBirth);
+                (other._dateOfBirth == this._dateOfBirth || other._dateOfBirth == this._dateOfBirth.tomorrow() || other._dateOfBirth.tomorrow() == this._dateOfBirth); //Checks all three settings (including the next day) to see if they are twins.
     }
 
     /**
@@ -162,7 +162,7 @@ public class Baby {
     @param other - the baby to compare this baby with.
     @return true if the babies are the same.
      */
-    public boolean equals (Baby other) {
+    public boolean equals (Baby other) { //Compares all parameters
         return other._lastName.equals(this._lastName) &&
                 other._firstName.equals(this._firstName) &&
                 other._id.equals(this._id) &&
@@ -175,7 +175,7 @@ public class Baby {
     @param grams the number of grams to add to he baby's current weight (can be negative).
      */
     public void updateCurrentWeight (int grams) {
-        this._currentWeight.add(grams);
+        this._currentWeight.add(grams); //Uses the weight method to add the weight
     }
 
     /**
@@ -185,7 +185,7 @@ public class Baby {
     @return true if the date of birth of this baby is before the date of birth of the other baby.
      */
     public boolean older (Baby other){
-        return (this._dateOfBirth.before(other._dateOfBirth));
+        return (this._dateOfBirth.before(other._dateOfBirth)); //Uses the Date method to check this.
     }
 
     /**
@@ -195,7 +195,7 @@ public class Baby {
     @return true if the date of birth of this baby is before the date of birth of the other baby.
      */
     public boolean heavier (Baby other){
-        if (turnWeightToGrams(this._currentWeight) > turnWeightToGrams(other._currentWeight)) {
+        if (turnWeightToGrams(this._currentWeight) > turnWeightToGrams(other._currentWeight)) { //Converts the two objects to grams and checks if one is greater than the other.
             return true;
         }
         else {
@@ -220,26 +220,26 @@ public class Baby {
         double expectedWeightInGrams = birthWeightInGrams;
 
         if (numOfDays <= 7) {
-            double weightLoss = birthWeightInGrams * 0.10 * (numOfDays / 7.0);
+            double weightLoss = birthWeightInGrams * 0.10 * (numOfDays / 7.0); // Takes up 10 percent of the weight
             expectedWeightInGrams -= weightLoss; }
 
         else if (numOfDays <= 60) {
-            expectedWeightInGrams -= birthWeightInGrams * 0.10;
+            expectedWeightInGrams -= birthWeightInGrams * 0.10; // Summarize the tests performed and perform the next test.
             expectedWeightInGrams += 30 * (numOfDays - 7); }
 
         else if (numOfDays <= 120) {
-            expectedWeightInGrams -= birthWeightInGrams * 0.10;
+            expectedWeightInGrams -= birthWeightInGrams * 0.10; // Summarize the tests performed and perform the next test.
             expectedWeightInGrams += 30 * 53;
             expectedWeightInGrams += 25 * (numOfDays - 60); }
 
         else if (numOfDays <= 240) {
-            expectedWeightInGrams -= birthWeightInGrams * 0.10;
+            expectedWeightInGrams -= birthWeightInGrams * 0.10; // Summarize the tests performed and perform the next test.
             expectedWeightInGrams += 30 * 53;
             expectedWeightInGrams += 25 * 60;
             expectedWeightInGrams += 16 * (numOfDays - 120); }
 
         else {
-            expectedWeightInGrams -= birthWeightInGrams * 0.10;
+            expectedWeightInGrams -= birthWeightInGrams * 0.10; // Summarize the tests performed and perform the next test.
             expectedWeightInGrams += 30 * 53;
             expectedWeightInGrams += 25 * 60;
             expectedWeightInGrams += 16 * 120;
@@ -253,9 +253,9 @@ public class Baby {
         }
     }
 
-
+    //The function converts a weight object to grams only.
     private int turnWeightToGrams(Weight weight) {
-        return weight.getGrams() + (weight.getKilos() * 1000);
+        return weight.getGrams() + (weight.getKilos() * AMOUNT_OF_GRAMS_IN_KILO); //Converts kilos to grams and adds to the sum of grams in the object.
     }
 
 }
