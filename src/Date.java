@@ -1,4 +1,4 @@
-/*
+/**
 This class represents a Baby object.
 
 @version 2025a
@@ -10,23 +10,44 @@ public class Date {
     private int _month;
     private int _year;
 
-    private static final int minimumDaysPerMonth = 1;
-    private static final int lowestYear = 0;
+    private static final int MINIMUM_DAYS_PER_MONTH = 1;
+    private static final int LOWEST_YEAR = 0;
 
-    private static final Date newDate = new Date(1, 1, 2024);
+    private static final int DEFAULT_DAY_IN_MONTH = 1;
+    private static final int DEFAULT_MONTH_IN_YEAR = 1;
+    private static final int DEFAULT_YEAR = 1;
 
-    /*
+    private static final int MONTH_LENGTH_28 = 28;
+    private static final int MONTH_LENGTH_29 = 29;
+    private static final int MONTH_LENGTH_30 = 30;
+    private static final int MONTH_LENGTH_31 = 31;
+
+
+    private static final int JANUARY = 1;
+    private static final int FEBRUARY = 2;
+    private static final int MARCH = 3;
+    private static final int APRIL = 4;
+    private static final int MAY = 5;
+    private static final int JUNE = 6;
+    private static final int JULY = 7;
+    private static final int AUGUST = 8;
+    private static final int SEPTEMBER = 9;
+    private static final int OCTOBER = 10;
+    private static final int NOVEMBER = 11;
+    private static final int DECEMBER = 12;
+
+    /**
     Date constructor - If the given date is valid - creates a new Date object, otherwise creates the date 01/01/2000.
 
-    @param day - the day in the month (1-31)
-    @param month - the month in the year (1-12)
-    @param year - the year (4 digits)
+    @param day the day in the month (1-31)
+    @param month the month in the year (1-12)
+    @param year the year (4 digits)
      */
     public Date(int day, int month, int year) {
-        if (checkIfDateIsReal(day, month, year) == "invalidDate") {
-            this._day = 1;
-            this._month = 1;
-            this._year = 2024;
+        if (checkIfDateIsReal(day, month, year).equals("invalidDate")) {
+            this._day = DEFAULT_DAY_IN_MONTH;
+            this._month = DEFAULT_MONTH_IN_YEAR;
+            this._year = DEFAULT_YEAR;
 
         } else {
             this._day = day;
@@ -36,19 +57,19 @@ public class Date {
     }
 
 
-    /*
+    /**
     Default constructor
      */
     public Date() {
-        this._day = 1;
-        this._month = 1;
-        this._year = 2024;
+        this._day = DEFAULT_DAY_IN_MONTH;
+        this._month = DEFAULT_MONTH_IN_YEAR;
+        this._year = DEFAULT_YEAR;
     }
 
-    /*
+    /**
     Copy constructor
 
-    @param other - the date to be copied
+    @param other the date to be copied
      */
     public Date(Date other) {
         this._day = other._day;
@@ -56,7 +77,7 @@ public class Date {
         this._year = other._year;
     }
 
-    /*
+    /**
     Gets the day
 
     @return the day of this date
@@ -65,10 +86,10 @@ public class Date {
         return _day;
     }
 
-    /*
+    /**
     Sets the day (only if date remains valid)
 
-    @param dayToSet - the new day value
+    @param dayToSet the new day value
      */
     public void setDay(int dayToSet) {
         if (checkIfDateIsReal(dayToSet, this._month, this._year).equals("realDate")) {
@@ -76,7 +97,7 @@ public class Date {
         }
     }
 
-    /*
+    /**
     Gets the month
 
     @return the month of this date
@@ -85,10 +106,10 @@ public class Date {
         return _month;
     }
 
-    /*
+    /**
     Sets the month (only if date remains valid)
 
-    @param monthToSet - the new month value
+    @param monthToSet the new month value
      */
     public void setMonth(int monthToSet) {
         if (checkIfDateIsReal(this._day, monthToSet, this._year).equals("realDate")){
@@ -96,7 +117,7 @@ public class Date {
         }
     }
 
-    /*
+    /**
     Gets the year
 
     @return the year of this date
@@ -105,10 +126,10 @@ public class Date {
         return _year;
     }
 
-    /*
+    /**
     Sets the year (only if date remains valid)
 
-    @param yearToSet - the new year value
+    @param yearToSet the new year value
      */
     public void setYear(int yearToSet) {
         if (checkIfDateIsReal(this._day, this._month, yearToSet).equals("realDate")){
@@ -117,26 +138,26 @@ public class Date {
     }
 
 
-    private String checkIfDateIsReal(int enterdDay, int enterdMonth, int enterdYear) {
-        switch (enterdMonth) {
-            case 1, 3, 5, 7, 8, 10, 12:
-                if (enterdDay < minimumDaysPerMonth || enterdDay > 31 || enterdYear < lowestYear) {
+    private String checkIfDateIsReal(int enteredDay, int enteredMonth, int enteredYear) {
+        switch (enteredMonth) {
+            case JANUARY, MARCH, MAY, JULY, AUGUST, OCTOBER, DECEMBER:
+                if (enteredDay < MINIMUM_DAYS_PER_MONTH || enteredDay > MONTH_LENGTH_31 || enteredYear < LOWEST_YEAR) {
                     return "invalidDate";
                 } else return "realDate";
 
-            case 2:
-                if (isLeapYear(enterdYear)) {
-                    if (enterdDay < minimumDaysPerMonth || enterdDay > 29 || enterdYear < lowestYear) {
+            case FEBRUARY:
+                if (isLeapYear(enteredYear)) {
+                    if (enteredDay < MINIMUM_DAYS_PER_MONTH || enteredDay > MONTH_LENGTH_29 || enteredYear < LOWEST_YEAR) {
                         return "invalidDate";
                     } else return "realDate";
                 } else {
-                    if (enterdDay < minimumDaysPerMonth || enterdDay > 28 || enterdYear < lowestYear) {
+                    if (enteredDay < MINIMUM_DAYS_PER_MONTH || enteredDay > MONTH_LENGTH_28 || enteredYear < LOWEST_YEAR) {
                         return "invalidDate";
                     } else return "realDate";
                 }
 
-            case 4, 6, 9, 11:
-                if (enterdDay < minimumDaysPerMonth || enterdDay > 30 || enterdYear < lowestYear) {
+            case APRIL, JUNE, SEPTEMBER, NOVEMBER:
+                if (enteredDay < MINIMUM_DAYS_PER_MONTH || enteredDay > MONTH_LENGTH_30 || enteredYear < LOWEST_YEAR) {
                     return "invalidDate";
                 } else return "realDate";
 
@@ -146,28 +167,22 @@ public class Date {
 
     }
 
-    /*
+    /**
     Checks if two dates are the same
 
-    @param other - the date to compare this date to
+    @param other the date to compare this date to
     @return true if the dates are the same
      */
     public boolean equals(Date other) {
-        if (
-                other.getDay() == this._day &&
-                        other.getMonth() == this._month &&
-                        other.getYear() == this._year
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+        return other.getDay() == this._day &&
+                other.getMonth() == this._month &&
+                other.getYear() == this._year;
     }
 
-    /*
+    /**
     Checks if this date comes before another date
 
-    @param other - date to compare this date to
+    @param other date to compare this date to
     @return true if this date is before the other date
      */
     public boolean before(Date other) {
@@ -184,20 +199,20 @@ public class Date {
         return false;
     }
 
-    /*
+    /**
     Checks if this date comes after another date
 
-    @param other - date to compare this date to
+    @param other date to compare this date to
     @return true if this date is before the other date
      */
     public boolean after(Date other) {
         return !(this.before(other));
     }
 
-    /*
+    /**
     Calculates the difference in days between two dates
 
-    @param other - the date to calculate the difference between
+    @param other the date to calculate the difference between
     @return the number of days between the dates (non negative value)
      */
     public int difference(Date other) {
@@ -207,7 +222,7 @@ public class Date {
         return Math.abs(thisDays - otherDays);
     }
 
-    /*
+    /**
     Returns a String that represents this date
 
     @return a String that represents this date in the following format: day (2 digits) / month(2 digits) / year (4 digits) for example: 02/03/1998
@@ -228,45 +243,45 @@ public class Date {
 
     }
 
-    /*
+    /**
     Calculate the date of tomorrow
 
     @return the date of tomorrow
      */
     public Date tomorrow() {
-        if (_month == 4 || _month == 6 || _month == 9 || _month == 11) {
-            if (_day < 30) {
+        if (_month == APRIL || _month == JUNE || _month == SEPTEMBER || _month == NOVEMBER) {
+            if (_day < MONTH_LENGTH_30) {
                 return new Date(_day + 1, _month, _year);
             } else {
                 return new Date(1, _month + 1, _year);
             }
         }
 
-        if (_month == 1 || _month == 3 || _month == 5 || _month == 7 || _month == 8 || _month == 10) {
-            if (_day < 31) {
+        if (_month == JANUARY || _month == MARCH || _month == MAY || _month == JULY || _month == AUGUST || _month == OCTOBER) {
+            if (_day < MONTH_LENGTH_31) {
                 return new Date(_day + 1, _month, _year);
             } else {
                 return new Date(1, _month + 1, _year);
             }
         }
 
-        if (_month == 12) {
-            if (_day < 31) {
+        if (_month == DECEMBER) {
+            if (_day < MONTH_LENGTH_31) {
                 return new Date(_day + 1, _month, _year);
             } else {
                 return new Date(1, 1, _year + 1);
             }
         }
 
-        if (_month == 2) {
+        if (_month == FEBRUARY) {
             if (isLeapYear(_year)) {
-                if (_day < 29) {
+                if (_day < MONTH_LENGTH_29) {
                     return new Date(_day + 1, _month, _year);
                 } else {
                     return new Date(1, _month + 1, _year);
                 }
             } else {
-                if (_day < 28) {
+                if (_day < MONTH_LENGTH_28) {
                     return new Date(_day + 1, _month, _year);
                 } else {
                     return new Date(1, _month + 1, _year);
@@ -279,7 +294,7 @@ public class Date {
 
     private boolean isLeapYear (int y)
     {
-        return (y%4==0 && y%100!=0) || (y%400==0) ? true : false;
+        return (y % 4 == 0 && y % 100 != 0) || (y % 400 == 0);
     }
 
     //computes the day number since the beginning of the Christian counting of years
