@@ -107,11 +107,14 @@ public class Weight {
 
     @return a String that represents this weight in the following format: kiols.grmas(3 digits) for example: 4.07 or 3.055 or 4.005.
      */
+
     public String toString() {
         double numOfGramsIn = turnWeightToGrams(this);
         numOfGramsIn = numOfGramsIn/AMOUNT_OF_GRAMS_IN_KILO; //Divides the object by 1000 as a double, thus obtaining it as the correct value for printing as required.
         return "" + numOfGramsIn;
     }
+
+
 
     /**
     Return a new weight with the additional grams given as parameter
